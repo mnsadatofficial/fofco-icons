@@ -3,145 +3,313 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FOFco Icons Library</title>
-    <!-- লোকাল CSS লিংক -->
+    <title>FOFco Icons</title>
     <link rel="stylesheet" href="./dist/fof.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&display=swap" rel="stylesheet">
     <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(-45deg, #ff9a9e, #fecfef, #a18cd1, #fbc2eb);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
             color: #333;
-            margin: 0; padding: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
-        header {
-            background: #fff;
-            padding: 30px 20px;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
-        h1 { margin: 0; color: #ff5722; font-size: 32px; }
-        .search-container {
-            max-width: 500px;
-            margin: 20px auto 0;
-            position: relative;
+
+        .blob {
+            position: fixed; border-radius: 50%; filter: blur(60px); z-index: -1;
+            opacity: 0.8; animation: float 8s ease-in-out infinite;
         }
-        #searchInput {
-            width: 100%;
-            padding: 15px 20px;
-            font-size: 16px;
-            border: 2px solid #e0e0e0;
-            border-radius: 30px;
-            outline: none;
-            transition: 0.3s;
-            box-sizing: border-box;
+        .blob-1 { width: 300px; height: 300px; background: #ffeb3b; top: 10%; left: 5%; }
+        .blob-2 { width: 400px; height: 400px; background: #00bcd4; bottom: 5%; right: 10%; animation-delay: -3s; animation-direction: reverse; }
+        .blob-3 { width: 250px; height: 250px; background: #ff5722; top: 40%; left: 40%; animation-delay: -5s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
+            50% { transform: translateY(-40px) scale(1.1) rotate(10deg); }
         }
-        #searchInput:focus { border-color: #ff5722; }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+
+        header { text-align: center; margin-bottom: 50px; }
+        .brand { 
+            font-size: 48px; font-weight: 900; color: #fff;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 10px; display: inline-block;
+            transition: 0.3s; cursor: pointer;
+        }
+        .brand:hover { transform: scale(1.05) rotate(-2deg); }
+
+        .search-box { max-width: 500px; margin: 20px auto; position: relative; }
+        .search-box input {
+            width: 100%; padding: 18px 30px; font-size: 18px;
+            font-family: 'Nunito', sans-serif; font-weight: 600;
+            border-radius: 50px; outline: none; color: #444;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        .search-box input::placeholder { color: #888; }
+        .search-box input:focus {
+            background: rgba(255, 255, 255, 0.8);
+            transform: scale(1.02);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
         .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            gap: 20px;
-            padding: 40px;
-            max-width: 1000px;
-            margin: 0 auto;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 25px;
         }
+
         .icon-card {
-            background: #fff;
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
-            cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
+            border-radius: 24px; padding: 30px 15px; text-align: center;
+            cursor: pointer; transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
         .icon-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
-            color: #ff5722;
+            background: rgba(255, 255, 255, 0.7);
+            transform: translateY(-10px) scale(1.08) rotate(3deg);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
         }
-        .icon-card fof { font-size: 32px; }
-        .icon-name { font-size: 12px; font-weight: 600; color: #666; }
+        .icon-card fof { font-size: 42px; color: #333; margin-bottom: 10px; transition: 0.3s; }
+        .icon-card:hover fof { color: #ff5722; transform: scale(1.1); }
+        .icon-name { font-weight: 700; font-size: 14px; color: #555; }
+
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.2); backdrop-filter: blur(8px);
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; visibility: hidden; transition: 0.3s ease; z-index: 1000;
+        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+
+        .modal-content {
+            width: 90%; max-width: 480px; border-radius: 30px;
+            padding: 40px; position: relative; text-align: center;
+            transform: scale(0.7); opacity: 0; transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        .modal-overlay.active .modal-content { transform: scale(1); opacity: 1; }
+
+        .close-btn {
+            position: absolute; top: 20px; right: 20px;
+            background: transparent; border: none;
+            width: 36px; height: 36px; border-radius: 10px;
+            font-size: 24px; font-weight: bold; cursor: pointer; color: #888;
+            transition: 0.2s ease; display: flex; align-items: center; justify-content: center;
+        }
+        .close-btn:hover { background: rgba(0, 0, 0, 0.05); color: #ff5722; transform: scale(1.1); }
+
+        .modal-preview {
+            width: 120px; height: 120px; margin: 0 auto 20px;
+            border-radius: 30px; display: flex; align-items: center; justify-content: center;
+            background: rgba(255, 255, 255, 0.5); box-shadow: inset 0 4px 10px rgba(255,255,255,0.8);
+        }
+        .modal-preview fof { font-size: 60px; color: #ff5722; transition: 0.3s; }
         
-        #toast {
-            position: fixed;
-            bottom: 30px; left: 50%;
-            transform: translateX(-50%);
-            background: #333; color: #fff;
-            padding: 12px 24px;
-            border-radius: 30px;
-            font-size: 14px;
-            opacity: 0; visibility: hidden;
-            transition: 0.3s;
+        .modal-title { font-size: 28px; font-weight: 900; margin-bottom: 25px; color: #333; text-transform: capitalize; }
+
+        .code-box {
+            background: rgba(255, 255, 255, 0.8); padding: 15px; border-radius: 16px;
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 20px; font-family: monospace; font-size: 15px; color: #ff5722;
+            font-weight: bold; border: 1px dashed rgba(0,0,0,0.15); text-align: left;
         }
-        #toast.show { opacity: 1; visibility: visible; bottom: 50px; }
+        .code-box span { flex: 1; word-wrap: break-word; padding-right: 10px; }
+        
+        button.copy-btn {
+            background: #ff5722; color: #fff; border: none; padding: 10px 20px;
+            border-radius: 12px; font-family: 'Nunito', sans-serif; font-weight: 800;
+            cursor: pointer; transition: 0.2s; white-space: nowrap;
+        }
+        button.copy-btn:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(255, 87, 34, 0.3); }
+
+        .variants-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
+        .v-card {
+            background: rgba(255, 255, 255, 0.4); padding: 15px; border-radius: 16px;
+            cursor: pointer; transition: 0.3s; font-weight: 700; font-size: 13px; color: #555;
+        }
+        .v-card:hover { background: #fff; transform: translateY(-5px); color: #ff5722; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .v-card fof { font-size: 28px; margin-bottom: 5px; display: block; color: #333; }
+        .v-card:hover fof { color: #ff5722; }
+        
+        /* New explicit class code hint */
+        .code-hint {
+            display: block; font-size: 11px; font-family: monospace;
+            color: #888; margin-top: 6px; font-weight: normal;
+        }
+
+        .toast {
+            position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%);
+            background: #fff; color: #ff5722; padding: 15px 30px; border-radius: 50px;
+            font-weight: 800; font-size: 16px; box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+            transition: 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); z-index: 2000;
+        }
+        .toast.show { bottom: 40px; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>FOFco Icons</h1>
-        <p>Click on any icon to copy the code.</p>
-        <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Search icons...">
-        </div>
-    </header>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
 
-    <div class="grid" id="iconGrid"></div>
-    <div id="toast">Code Copied!</div>
+    <div class="container">
+        <header>
+            <div class="brand">FOFco Icons.</div>
+            <div class="search-box">
+                <input type="text" class="glass" id="searchInput" placeholder="Find an icon..." autocomplete="off">
+            </div>
+        </header>
+
+        <div class="grid" id="iconGrid"></div>
+    </div>
+
+    <!-- Glassmorphism Bouncy Modal -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+        <div class="modal-content glass">
+            <button class="close-btn" onclick="forceCloseModal()">✕</button>
+            <div class="modal-preview"><fof id="mPreview">icon</fof></div>
+            <h2 class="modal-title" id="mTitle">Icon Name</h2>
+            
+            <div class="code-box">
+                <span id="mCode">&lt;fof&gt;icon&lt;/fof&gt;</span>
+                <button class="copy-btn" id="copyBtn" onclick="copyCurrentCode()">Copy!</button>
+            </div>
+
+            <div class="variants-grid">
+                <div class="v-card" onclick="applyVariant('base')">
+                    <fof id="mBase">icon</fof> Normal
+                    <span class="code-hint">Default</span>
+                </div>
+                <div class="v-card" onclick="applyVariant('lg')">
+                    <fof class="fof-lg" id="mLg">icon</fof> Large Size
+                    <span class="code-hint">class="fof-lg"</span>
+                </div>
+                <div class="v-card" onclick="applyVariant('spin')">
+                    <fof class="fof-spin" id="mSpin">icon</fof> Make it Spin
+                    <span class="code-hint">class="fof-spin"</span>
+                </div>
+                <div class="v-card" onclick="applyVariant('beat')">
+                    <fof class="fof-beat" id="mBeat">icon</fof> Make it Beat
+                    <span class="code-hint">class="fof-beat"</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">Code Copied!</div>
 
     <script>
         let allIcons = [];
+        let currentIcon = '';
         const grid = document.getElementById('iconGrid');
         const searchInput = document.getElementById('searchInput');
-        const toast = document.getElementById('toast');
+        const modalOverlay = document.getElementById('modalOverlay');
 
-        // JSON থেকে আইকন ফেচ করা
         fetch('./dist/icons.json')
             .then(res => res.json())
-            .then(icons => {
-                allIcons = icons;
-                renderIcons(allIcons);
-            })
-            .catch(err => console.error("Error loading icons:", err));
+            .then(icons => { allIcons = icons; renderIcons(allIcons); })
+            .catch(err => console.error("Error:", err));
 
-        // আইকন রেন্ডার করার ফাংশন
-        function renderIcons(iconsToRender) {
+        function renderIcons(iconsArray) {
             grid.innerHTML = '';
-            if(iconsToRender.length === 0) {
-                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #888;">No icons found!</p>';
+            if(iconsArray.length === 0) {
+                grid.innerHTML = '<h3 style="grid-column: 1/-1; text-align: center; color: #fff;">Oops! No icons found</h3>';
                 return;
             }
-            
-            iconsToRender.forEach(iconName => {
+            iconsArray.forEach(icon => {
                 const card = document.createElement('div');
-                card.className = 'icon-card';
-                card.innerHTML = `
-                    <fof>${iconName}</fof>
-                    <div class="icon-name">${iconName}</div>
-                `;
-                // ক্লিক করলে কোড কপি হবে
-                card.onclick = () => copyToClipboard(`<fof>${iconName}</fof>`);
+                card.className = 'icon-card glass';
+                card.onclick = () => openModal(icon);
+                card.innerHTML = `<fof>${icon}</fof><div class="icon-name">${icon}</div>`;
                 grid.appendChild(card);
             });
         }
 
-        // সার্চ ফাংশন
         searchInput.addEventListener('input', (e) => {
-            const searchTerm = e.target.value.toLowerCase();
-            const filtered = allIcons.filter(icon => icon.includes(searchTerm));
-            renderIcons(filtered);
+            renderIcons(allIcons.filter(i => i.includes(e.target.value.toLowerCase())));
         });
 
-        // কপি করার ফাংশন
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                toast.innerHTML = `Copied: <b>${text.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</b>`;
-                toast.classList.add('show');
-                setTimeout(() => toast.classList.remove('show'), 2000);
+        function openModal(iconName) {
+            currentIcon = iconName;
+            document.getElementById('mTitle').innerText = iconName;
+            
+            // Reset main preview and classes
+            const previewBox = document.getElementById('mPreview');
+            previewBox.innerText = iconName;
+            previewBox.className = ''; 
+            
+            document.getElementById('mCode').innerText = `<fof>${iconName}</fof>`;
+            
+            document.getElementById('mBase').innerText = iconName;
+            document.getElementById('mLg').innerText = iconName;
+            document.getElementById('mSpin').innerText = iconName;
+            document.getElementById('mBeat').innerText = iconName;
+            
+            document.getElementById('copyBtn').innerText = 'Copy!';
+            modalOverlay.classList.add('active');
+        }
+
+        function closeModal(e) { if(e.target === modalOverlay) forceCloseModal(); }
+        function forceCloseModal() { modalOverlay.classList.remove('active'); }
+
+        // Live Apply Variant and Show Code
+        function applyVariant(type) {
+            const previewBox = document.getElementById('mPreview');
+            const codeBox = document.getElementById('mCode');
+            const copyBtn = document.getElementById('copyBtn');
+            
+            previewBox.className = ''; // Reset class
+            let code = `<fof>${currentIcon}</fof>`;
+            
+            if(type === 'spin') {
+                previewBox.classList.add('fof-spin');
+                code = `<fof class="fof-spin">${currentIcon}</fof>`;
+            } else if(type === 'beat') {
+                previewBox.classList.add('fof-beat');
+                code = `<fof class="fof-beat">${currentIcon}</fof>`;
+            } else if(type === 'lg') {
+                previewBox.classList.add('fof-lg');
+                code = `<fof class="fof-lg">${currentIcon}</fof>`;
+            }
+
+            codeBox.innerText = code;
+            
+            // Automatically copy to clipboard when variant is clicked
+            navigator.clipboard.writeText(code).then(() => {
+                copyBtn.innerText = 'Copied!';
+                showToast();
             });
+        }
+
+        function copyCurrentCode() {
+            const code = document.getElementById('mCode').innerText;
+            navigator.clipboard.writeText(code).then(() => {
+                document.getElementById('copyBtn').innerText = 'Copied!';
+                showToast();
+            });
+        }
+
+        let toastTimer;
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toast.classList.remove('show'), 2500);
         }
     </script>
 </body>
