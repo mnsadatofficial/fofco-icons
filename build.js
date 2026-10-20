@@ -103,6 +103,20 @@ fof.fof-hover-color:hover { color: #ff5722; }
 `;
     
     fs.writeFileSync(path.join(distDir, 'fof.css'), cssContent);
+
+    fs.writeFileSync(path.join(distDir, 'fof.css'), cssContent);
+    
+  
+    const svgsDir = path.join(__dirname, 'src', 'svgs');
+    const files = fs.readdirSync(svgsDir);
+    const iconNames = files
+        .filter(file => file.endsWith('.svg'))
+        .map(file => file.replace('.svg', ''));
+    
+    fs.writeFileSync(path.join(distDir, 'icons.json'), JSON.stringify(iconNames));
+    // -----------------------------------------
+
+    console.log('✅ Premium FOFco CSS and JSON generated!');
     console.log('✅ Premium FOFco CSS with signature generated!');
 })
 .catch((error) => {

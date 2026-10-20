@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOFco Icons Library</title>
+    <!-- লোকাল CSS লিংক -->
+    <link rel="stylesheet" href="./dist/fof.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0; padding: 0;
+        }
+        header {
+            background: #fff;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        h1 { margin: 0; color: #ff5722; font-size: 32px; }
+        .search-container {
+            max-width: 500px;
+            margin: 20px auto 0;
+            position: relative;
+        }
+        #searchInput {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 30px;
+            outline: none;
+            transition: 0.3s;
+            box-sizing: border-box;
+        }
+        #searchInput:focus { border-color: #ff5722; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 20px;
+            padding: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .icon-card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        .icon-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            color: #ff5722;
+        }
+        .icon-card fof { font-size: 32px; }
+        .icon-name { font-size: 12px; font-weight: 600; color: #666; }
+        
+        #toast {
+            position: fixed;
+            bottom: 30px; left: 50%;
+            transform: translateX(-50%);
+            background: #333; color: #fff;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 14px;
+            opacity: 0; visibility: hidden;
+            transition: 0.3s;
+        }
+        #toast.show { opacity: 1; visibility: visible; bottom: 50px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>FOFco Icons</h1>
+        <p>Click on any icon to copy the code.</p>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search icons...">
+        </div>
+    </header>
+
+    <div class="grid" id="iconGrid"></div>
+    <div id="toast">Code Copied!</div>
+
+    <script>
+        let allIcons = [];
+        const grid = document.getElementById('iconGrid');
+        const searchInput = document.getElementById('searchInput');
+        const toast = document.getElementById('toast');
+
+        // JSON থেকে আইকন ফেচ করা
+        fetch('./dist/icons.json')
+            .then(res => res.json())
+            .then(icons => {
+                allIcons = icons;
+                renderIcons(allIcons);
+            })
+            .catch(err => console.error("Error loading icons:", err));
+
+        // আইকন রেন্ডার করার ফাংশন
+        function renderIcons(iconsToRender) {
+            grid.innerHTML = '';
+            if(iconsToRender.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #888;">No icons found!</p>';
+                return;
+            }
+            
+            iconsToRender.forEach(iconName => {
+                const card = document.createElement('div');
+                card.className = 'icon-card';
+                card.innerHTML = `
+                    <fof>${iconName}</fof>
+                    <div class="icon-name">${iconName}</div>
+                `;
+                // ক্লিক করলে কোড কপি হবে
+                card.onclick = () => copyToClipboard(`<fof>${iconName}</fof>`);
+                grid.appendChild(card);
+            });
+        }
+
+        // সার্চ ফাংশন
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const filtered = allIcons.filter(icon => icon.includes(searchTerm));
+            renderIcons(filtered);
+        });
+
+        // কপি করার ফাংশন
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                toast.innerHTML = `Copied: <b>${text.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</b>`;
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 2000);
+            });
+        }
+    </script>
+</body>
+</html>
